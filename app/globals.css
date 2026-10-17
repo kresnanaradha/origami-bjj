@@ -133,11 +133,6 @@ body {
   .poster { break-inside: avoid; page-break-after: always; }
 }
 
-/* html5-qrcode: video penuh tanpa kotak bidik putih bawaan; bingkai merah ada di halaman scan */
-#qr-reader { border: 0 !important; }
-#qr-reader video { width: 100% !important; height: 100% !important; object-fit: cover; border-radius: 1rem; }
-#qr-reader__scan_region { background: transparent !important; }
-#qr-shaded-region { display: none !important; }
 
 /* Landing page: tombol datar + bayangan merah */
 @layer components {

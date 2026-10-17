@@ -1,7 +1,12 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { waLink } from "@/lib/site";
 
 export default function WhatsAppButton() {
+  const path = usePathname();
+  if (path === "/app/scan") return null; // menutupi kamera dan petunjuk scan
   return (
     <a
       href={waLink()}
