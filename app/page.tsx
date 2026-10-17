@@ -178,7 +178,11 @@ export default async function Home() {
                     <h3 className="text-xl font-semibold">{c.name}</h3>
                     <p className="mt-1 text-sm text-white/55">{x(c.audience)}</p>
                   </div>
-                  <Link href="/register" className="shrink-0 border-b border-brand pb-0.5 text-sm font-medium text-white transition hover:text-brand">{t("classes.book")} →</Link>
+                  {c.days === "By Appointment" ? (
+                    <a href={waLink(t("priv.msgGuest"))} target="_blank" rel="noopener noreferrer" className="shrink-0 border-b border-brand pb-0.5 text-sm font-medium text-white transition hover:text-brand">{t("priv.btn")} →</a>
+                  ) : (
+                    <Link href="/register" className="shrink-0 border-b border-brand pb-0.5 text-sm font-medium text-white transition hover:text-brand">{t("classes.book")} →</Link>
+                  )}
                 </div>
                 <p className="mt-3 border-t border-white/10 pt-3 text-sm text-white/45">{x(c.days)} · {x(c.duration)}</p>
               </article>

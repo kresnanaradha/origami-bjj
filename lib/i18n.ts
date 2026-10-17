@@ -69,6 +69,8 @@ const en = {
   "a.ses.newPerson": "Add a new person (no account yet)", "a.ses.guestHelp": "For walk-ins without an account. If they sign up later with the same phone number or email, their record merges automatically.",
   "a.ses.nameLbl": "Full name", "a.ses.phoneLbl": "Phone (optional)", "a.ses.emailLbl": "Email (optional)", "a.ses.undo": "Tap again to undo", "a.mem.guest": "No account yet", "a.ses.added": "Added.",
   "a.md.merge": "Merge into an account", "a.md.mergeHelp": "This person has no account yet. If they already signed up with a different phone number or email, choose their account here. Attendance, plan and details move over and this entry is removed.", "a.md.mergePick": "Choose account", "a.md.mergeBtn": "Merge",
+  "priv.title": "Private Class", "priv.sub": "One-on-one or small group sessions with our coaches, by appointment. Message us to pick a time that suits you.",
+  "priv.btn": "Book via WhatsApp", "priv.msg": "Hi Origami BJJ, I'm {name}. I'd like to book a Private Class.", "priv.msgGuest": "Hi Origami BJJ, I'd like to book a Private Class.",
   // common
   "c.logout": "Logout", "c.save": "Save", "c.search": "Search", "c.clear": "Clear",
 } as const;
@@ -136,6 +138,8 @@ const id: Record<Key, string> = {
   "a.ses.newPerson": "Tambah orang baru (belum punya akun)", "a.ses.guestHelp": "Untuk walk-in yang belum punya akun. Kalau nanti mendaftar dengan no. telepon atau email yang sama, datanya otomatis menyatu.",
   "a.ses.nameLbl": "Nama lengkap", "a.ses.phoneLbl": "Telepon (opsional)", "a.ses.emailLbl": "Email (opsional)", "a.ses.undo": "Tekan lagi untuk membatalkan", "a.mem.guest": "Belum punya akun", "a.ses.added": "Ditambahkan.",
   "a.md.merge": "Gabungkan ke akun", "a.md.mergeHelp": "Orang ini belum punya akun. Kalau dia sudah mendaftar dengan no. telepon atau email yang berbeda, pilih akunnya di sini. Kehadiran, paket, dan datanya dipindahkan, lalu catatan ini dihapus.", "a.md.mergePick": "Pilih akun", "a.md.mergeBtn": "Gabungkan",
+  "priv.title": "Private Class", "priv.sub": "Sesi privat satu lawan satu atau kelompok kecil bersama pelatih kami, dengan janji. Hubungi kami untuk memilih waktu yang cocok.",
+  "priv.btn": "Book lewat WhatsApp", "priv.msg": "Halo Origami BJJ, saya {name}. Saya mau book Private Class.", "priv.msgGuest": "Halo Origami BJJ, saya mau book Private Class.",
   "c.logout": "Keluar", "c.save": "Simpan", "c.search": "Cari", "c.clear": "Reset",
 };
 

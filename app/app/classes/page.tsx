@@ -1,4 +1,6 @@
 import { book, cancel } from "@/app/actions";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
+import { waLink } from "@/lib/site";
 import { getI18n } from "@/lib/i18n";
 import { requireUser } from "@/lib/supabase";
 
@@ -9,7 +11,7 @@ type Row = {
 
 export default async function Classes({ searchParams }: PageProps<"/app/classes">) {
   const { error } = await searchParams;
-  const { supabase, user } = await requireUser();
+  const { supabase, user, profile } = await requireUser();
   const { t, x, date, time, dateLong } = await getI18n();
   const now = new Date().toISOString();
 
@@ -41,6 +43,16 @@ export default async function Classes({ searchParams }: PageProps<"/app/classes"
       <p className="eyebrow">{t("cls.eyebrow")}</p>
       <h1 className="mb-6 mt-2 text-2xl font-bold sm:mb-8 sm:text-3xl">{t("cls.title")}</h1>
       {error && <p className="mb-6 rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+
+      <section className="panel mb-10 flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
+        <div className="max-w-xl">
+          <h2 className="text-lg font-bold">{t("priv.title")}</h2>
+          <p className="mt-1 text-sm text-white/60">{t("priv.sub")}</p>
+        </div>
+        <a href={waLink(t("priv.msg", { name: profile.full_name }))} target="_blank" rel="noopener noreferrer" className="btn-wa">
+          <WhatsAppIcon className="h-5 w-5" />{t("priv.btn")}
+        </a>
+      </section>
       {!sessions.length && <p className="text-white/60">{t("cls.empty")}</p>}
 
       <div className="space-y-10">

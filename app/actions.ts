@@ -178,7 +178,7 @@ export async function deleteTemplate(f: FormData) {
 
 export async function cancelSession(f: FormData) {
   const { supabase } = await requireUser(true);
-  await supabase.rpc("admin_cancel_session", { p_id: str(f, "id") });
+  await supabase.from("sessions").delete().eq("id", str(f, "id"));
   revalidatePath("/admin", "layout");
   redirect("/admin/sessions");
 }

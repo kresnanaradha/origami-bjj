@@ -23,7 +23,7 @@ export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
             </Link>
           </div>
         </div>
-        <AdminNav labels={labels} className="overflow-x-auto px-3 pb-2 md:hidden" />
+        <AdminNav labels={labels} className="overflow-x-auto px-4 pb-2 md:hidden" />
       </header>
       <main className="rise mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 print:max-w-none print:p-0">{children}</main>
     </div>
