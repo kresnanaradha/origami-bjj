@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LangSwitch from "@/components/LangSwitch";
+import { InstagramIcon, MailIcon } from "@/components/ContactIcons";
 import Logo from "@/components/Logo";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
@@ -239,10 +240,10 @@ export default async function Home() {
           </div>
           <div className="text-sm">
             <p className="text-xs uppercase tracking-[0.2em] text-white/65">{t("foot.contact")}</p>
-            <ul className="mt-4 space-y-2 text-white/95">
-              <li><a className="transition hover:text-white hover:underline" href={waLink()} target="_blank" rel="noopener noreferrer">WhatsApp · {site.phone}</a></li>
-              <li><a className="transition hover:text-white hover:underline" href={`mailto:${site.email}`}>{site.email}</a></li>
-              <li><a className="transition hover:text-white hover:underline" href={site.instagram} target="_blank" rel="noopener noreferrer">Instagram @origamibjj</a></li>
+            <ul className="mt-4 space-y-3 text-white/95">
+              <li><a className="flex items-center gap-3 transition hover:text-white hover:underline" href={waLink()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><WhatsAppIcon className="h-5 w-5 shrink-0" />{site.phone}</a></li>
+              <li><a className="flex items-center gap-3 transition hover:text-white hover:underline" href={`mailto:${site.email}`} aria-label="Email"><MailIcon />{site.email}</a></li>
+              <li><a className="flex items-center gap-3 transition hover:text-white hover:underline" href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon />@origamibjj</a></li>
             </ul>
           </div>
           <div className="text-sm">
