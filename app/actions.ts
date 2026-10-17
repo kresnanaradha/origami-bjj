@@ -63,25 +63,27 @@ export async function cancel(f: FormData) {
   revalidatePath("/app", "layout");
 }
 
-export type OpenSession = { sid: string; cname: string; starts: string; ends: string; instr: string | null; is_booked: boolean };
+export type OpenSession = { sid: string; cname: string; starts: string; ends: string; instr: string | null; is_booked: boolean; attended: boolean };
 export type ScanResult =
-  | { status: "done"; name: string }
+  | { status: "done"; name: string; sid: string }
   | { status: "pick"; sessions: OpenSession[]; preselect: string }
   | { status: "none" }
   | { status: "error"; message: string };
 
 // Absen sekali scan: kalau hanya ada satu kemungkinan kelas (satu kelas buka, atau member hanya book satu dari yang buka),
-// langsung dicatat. Member hanya diminta memilih kalau memang ambigu.
-export async function resolveScan(token: string): Promise<ScanResult> {
+// langsung dicatat. Member diminta memilih kalau ambigu, kalau ia sudah absen hari ini (supaya bisa mengoreksi),
+// atau kalau ia memilih "ubah kelas" (forcePick).
+export async function resolveScan(token: string, forcePick = false): Promise<ScanResult> {
   const { supabase } = await requireUser();
   const { data, error } = await supabase.rpc("open_sessions", { p_token: token });
   if (error) return { status: "error", message: error.message };
   const open = (data ?? []) as OpenSession[];
   if (!open.length) return { status: "none" };
   const booked = open.filter((o) => o.is_booked);
+  const alreadyIn = open.some((o) => o.attended);
   const auto = open.length === 1 ? open[0] : booked.length === 1 ? booked[0] : null;
-  if (auto) return confirmScan(token, auto.sid);
-  return { status: "pick", sessions: open, preselect: booked[0]?.sid ?? "" };
+  if (auto && !forcePick && !alreadyIn) return confirmScan(token, auto.sid);
+  return { status: "pick", sessions: open, preselect: forcePick || alreadyIn ? "" : booked[0]?.sid ?? "" };
 }
 
 export async function confirmScan(token: string, sessionId: string): Promise<ScanResult> {
@@ -89,7 +91,16 @@ export async function confirmScan(token: string, sessionId: string): Promise<Sca
   const { data, error } = await supabase.rpc("check_in", { p_token: token, p_session: sessionId });
   if (error) return { status: "error", message: error.message };
   revalidatePath("/app", "layout");
-  return { status: "done", name: String(data) };
+  return { status: "done", name: String(data), sid: sessionId };
+}
+
+// Batalkan absen sendiri (salah pilih kelas), lalu tampilkan pilihan kelas lagi.
+export async function undoCheckIn(token: string, sessionId: string): Promise<ScanResult> {
+  const { supabase } = await requireUser();
+  const { error } = await supabase.rpc("undo_check_in", { p_session: sessionId });
+  if (error) return { status: "error", message: error.message };
+  revalidatePath("/app", "layout");
+  return resolveScan(token, true);
 }
 
 export async function setMyGi(f: FormData) {
@@ -167,7 +178,7 @@ export async function deleteTemplate(f: FormData) {
 
 export async function cancelSession(f: FormData) {
   const { supabase } = await requireUser(true);
-  await supabase.from("sessions").delete().eq("id", str(f, "id"));
+  await supabase.rpc("admin_cancel_session", { p_id: str(f, "id") });
   revalidatePath("/admin", "layout");
   redirect("/admin/sessions");
 }

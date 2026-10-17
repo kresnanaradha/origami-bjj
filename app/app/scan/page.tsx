@@ -16,6 +16,7 @@ export default async function Scan({ searchParams }: PageProps<"/app/scan">) {
         labels={{
           hint: t("scan.hint"), camera: t("scan.camera"), checking: t("scan.checking"), pick: t("scan.pick"), mine: t("scan.mine"),
           confirm: t("scan.confirm"), done: t("scan.done"), none: t("scan.none"), again: t("scan.again"), home: t("scan.home"),
+          change: t("scan.change"), checkedIn: t("scan.checkedIn"), undo: t("scan.undo"),
         }}
       />
     </>

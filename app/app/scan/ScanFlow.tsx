@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { confirmScan, resolveScan, type OpenSession, type ScanResult } from "@/app/actions";
+import { confirmScan, resolveScan, undoCheckIn, type OpenSession, type ScanResult } from "@/app/actions";
 import Scanner from "./Scanner";
 
 type Labels = {
   hint: string; camera: string; checking: string; pick: string; mine: string; confirm: string;
-  done: string; none: string; again: string; home: string;
+  done: string; none: string; again: string; home: string; change: string; checkedIn: string; undo: string;
 };
 
 type State = { status: "scanning" } | { status: "busy" } | ScanResult;
@@ -77,6 +77,7 @@ export default function ScanFlow({ initialToken, labels }: { initialToken?: stri
         <p className="mt-5 text-sm text-white/60">{labels.done}</p>
         <p className="mt-1 text-2xl font-bold">{state.name}</p>
         <Link href="/app" className="btn mt-7 w-full !py-3">{labels.home}</Link>
+        <button type="button" onClick={async () => { setState({ status: "busy" }); handle(await undoCheckIn(token, state.sid)); }} className="mt-4 text-sm text-white/55 underline-offset-4 transition hover:text-white hover:underline">{labels.change}</button>
       </div>
     );
   }
@@ -92,15 +93,22 @@ export default function ScanFlow({ initialToken, labels }: { initialToken?: stri
         <p className="text-center text-sm font-medium text-white/80">{labels.pick}</p>
         <div className="space-y-3">
           {state.sessions.map((o: OpenSession) => (
-            <label key={o.sid} className="block cursor-pointer">
+            <div key={o.sid}>
+            <label className="block cursor-pointer">
               <input type="radio" name="session" value={o.sid} checked={choice === o.sid} onChange={() => setChoice(o.sid)} className="peer sr-only" />
               <span className="block rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition peer-checked:border-brand peer-checked:bg-brand/15 peer-checked:shadow-[0_0_30px_-10px_rgba(232,38,42,0.8)] peer-focus-visible:ring-2 peer-focus-visible:ring-brand">
                 <span className="block text-xs font-semibold text-brand">{time(o.starts)} - {time(o.ends)}</span>
                 <span className="mt-0.5 block text-lg font-bold leading-tight">{o.cname}</span>
                 <span className="block text-xs text-white/50">{o.instr || "—"}</span>
-                {o.is_booked && <span className="mt-2 inline-block rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">{labels.mine}</span>}
+                {o.attended
+                  ? <span className="mt-2 inline-block rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">{labels.checkedIn}</span>
+                  : o.is_booked && <span className="mt-2 inline-block rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[11px] font-medium text-amber-300">{labels.mine}</span>}
               </span>
             </label>
+            {o.attended && (
+              <button type="button" onClick={async () => { setState({ status: "busy" }); handle(await undoCheckIn(token, o.sid)); }} className="mt-1.5 w-full text-right text-xs text-white/55 underline-offset-4 transition hover:text-white hover:underline">{labels.undo}</button>
+            )}
+            </div>
           ))}
         </div>
         <button className="btn w-full !py-3 disabled:cursor-not-allowed" disabled={!choice}>{labels.confirm}</button>

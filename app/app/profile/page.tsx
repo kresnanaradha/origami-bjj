@@ -1,4 +1,5 @@
 import BeltProgress from "@/components/BeltProgress";
+import { MailIcon, PhoneIcon } from "@/components/ContactIcons";
 import GiOptions from "@/components/GiOptions";
 import { logout, setMyGi } from "@/app/actions";
 import { getI18n } from "@/lib/i18n";
@@ -17,7 +18,7 @@ export default async function ProfilePage() {
 
   const attended = history?.filter((h) => h.status === "attended").length ?? 0;
   const words = (profile.full_name || "Member").split(" ");
-  const last = words.length > 1 ? words.pop() : "";
+  const last = words.length > 1 && words[words.length - 1].length > 1 ? words.pop() : ""; // "Member 1" tetap satu nama
   const first = words.join(" ");
   const initials = (profile.full_name || "M").split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 
@@ -42,8 +43,8 @@ export default async function ProfilePage() {
           </div>
         </div>
         <div className="flex flex-col divide-white/10 border-t border-white/10 bg-white/[0.03] text-sm sm:flex-row sm:divide-x">
-          <p className="flex-1 truncate px-6 py-4 text-center text-white/85">✉ {user.email}</p>
-          <p className="flex-1 px-6 py-4 text-center text-white/85">☎ {profile.phone ?? "-"}</p>
+          <p className="flex flex-1 items-center justify-center gap-2.5 truncate px-6 py-4 text-white/85"><MailIcon className="text-white/70" /><span className="truncate">{user.email}</span></p>
+          <p className="flex flex-1 items-center justify-center gap-2.5 px-6 py-4 text-white/85"><PhoneIcon className="text-white/70" />{profile.phone ?? "-"}</p>
         </div>
       </section>
 
