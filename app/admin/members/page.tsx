@@ -12,6 +12,10 @@ export default async function Members({ searchParams }: PageProps<"/admin/member
   const { t, dateShort } = await getI18n();
   const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 
+  const { data: counts } = await supabase.rpc("admin_attendance_counts");
+  const visits = new Map<string, { total: number; month: number }>(
+    ((counts ?? []) as { member_id: string; total: number; this_month: number }[]).map((r) => [r.member_id, { total: r.total, month: r.this_month }]),
+  );
   const { data } = await supabase.from("profiles").select("id, full_name, email, phone, belt, stripes, membership_type, valid_until, member_no, role, is_guest").order("full_name").limit(500);
   const rows = (data ?? []).filter((m) => {
     const active = !!m.valid_until && m.valid_until >= today;
@@ -59,10 +63,15 @@ export default async function Members({ searchParams }: PageProps<"/admin/member
                     <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white/30" style={{ background: beltDot[m.belt] }} />
                     {t(`belt.${m.belt}` as Key)}{m.stripes > 0 && ` · ${m.stripes}`}
                   </span>
+                  <span className="mt-0.5 block text-xs text-white/50 sm:hidden">{visits.get(m.id)?.total ?? 0}× {t("a.mem.visits").toLowerCase()}</span>
                 </div>
                 <span className="hidden shrink-0 items-center gap-1.5 text-xs text-white/70 sm:inline-flex">
                   <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white/30" style={{ background: beltDot[m.belt] }} />
                   {t(`belt.${m.belt}` as Key)}{m.stripes > 0 && ` · ${m.stripes}`}
+                </span>
+                <span className="hidden w-14 shrink-0 text-center sm:block" title={t("a.mem.thisMonth", { n: visits.get(m.id)?.month ?? 0 })}>
+                  <span className="block text-xl font-semibold leading-none">{visits.get(m.id)?.total ?? 0}</span>
+                  <span className="mt-1 block text-[10px] uppercase tracking-wider text-white/40">{t("a.mem.visits")}</span>
                 </span>
                 <span className="w-28 shrink-0 text-right text-xs sm:w-36">
                   <span className={`inline-block rounded-full px-2.5 py-1 font-medium ${active ? "bg-emerald-500/15 text-emerald-300" : "bg-white/10 text-white/50"}`}>

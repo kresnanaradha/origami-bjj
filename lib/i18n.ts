@@ -71,6 +71,7 @@ const en = {
   "a.md.merge": "Merge into an account", "a.md.mergeHelp": "This person has no account yet. If they already signed up with a different phone number or email, choose their account here. Attendance, plan and details move over and this entry is removed.", "a.md.mergePick": "Choose account", "a.md.mergeBtn": "Merge",
   "priv.title": "Private Class", "priv.sub": "One-on-one or small group sessions with our coaches, by appointment. Message us to pick a time that suits you.",
   "priv.btn": "Book via WhatsApp", "priv.msg": "Hi Origami BJJ, I'm {name}. I'd like to book a Private Class.", "priv.msgGuest": "Hi Origami BJJ, I'd like to book a Private Class.",
+  "a.mem.visits": "Attended", "a.mem.thisMonth": "{n} this month",
   // common
   "c.logout": "Logout", "c.save": "Save", "c.search": "Search", "c.clear": "Clear",
 } as const;
@@ -140,6 +141,7 @@ const id: Record<Key, string> = {
   "a.md.merge": "Gabungkan ke akun", "a.md.mergeHelp": "Orang ini belum punya akun. Kalau dia sudah mendaftar dengan no. telepon atau email yang berbeda, pilih akunnya di sini. Kehadiran, paket, dan datanya dipindahkan, lalu catatan ini dihapus.", "a.md.mergePick": "Pilih akun", "a.md.mergeBtn": "Gabungkan",
   "priv.title": "Private Class", "priv.sub": "Sesi privat satu lawan satu atau kelompok kecil bersama pelatih kami, dengan janji. Hubungi kami untuk memilih waktu yang cocok.",
   "priv.btn": "Book lewat WhatsApp", "priv.msg": "Halo Origami BJJ, saya {name}. Saya mau book Private Class.", "priv.msgGuest": "Halo Origami BJJ, saya mau book Private Class.",
+  "a.mem.visits": "Hadir", "a.mem.thisMonth": "{n} bulan ini",
   "c.logout": "Keluar", "c.save": "Simpan", "c.search": "Cari", "c.clear": "Reset",
 };
 
