@@ -39,7 +39,7 @@ export default async function Classes({ searchParams }: PageProps<"/app/classes"
   return (
     <>
       <p className="eyebrow">{t("cls.eyebrow")}</p>
-      <h1 className="mb-8 mt-2 text-3xl font-bold">{t("cls.title")}</h1>
+      <h1 className="mb-6 mt-2 text-2xl font-bold sm:mb-8 sm:text-3xl">{t("cls.title")}</h1>
       {error && <p className="mb-6 rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
       {!sessions.length && <p className="text-white/60">{t("cls.empty")}</p>}
 

@@ -24,14 +24,14 @@ export default async function ProfilePage() {
   return (
     <>
       <section className="panel overflow-hidden shadow-[0_30px_70px_-30px_rgba(232,38,42,0.45)]">
-        <div className="relative flex items-center gap-6 p-6 sm:p-8">
+        <div className="relative flex items-center gap-4 p-5 sm:gap-6 sm:p-8">
           <div className="absolute -left-10 -top-16 h-56 w-56 rounded-full bg-brand/25 blur-3xl" aria-hidden="true" />
-          <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-dark text-3xl font-bold ring-4 ring-brand/30 sm:h-28 sm:w-28">
+          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-dark text-xl font-bold ring-4 ring-brand/30 sm:h-28 sm:w-28 sm:text-3xl">
             {initials}
           </div>
           <div className="relative">
-            <p className="text-xl font-light text-white/80">{last ? first : ""}</p>
-            <h1 className="text-3xl font-bold sm:text-4xl">{last || first}</h1>
+            <p className="text-base font-light text-white/80 sm:text-xl">{last ? first : ""}</p>
+            <h1 className="text-2xl font-bold sm:text-4xl">{last || first}</h1>
             <p className="mt-2 flex items-center gap-2 text-[11px] uppercase tracking-wider text-white/45">
               {t("prof.waiver")}
               <span className={`flex items-center gap-1 normal-case tracking-normal ${profile.waiver_filled ? "text-emerald-400" : "text-amber-400"}`}>
@@ -47,7 +47,7 @@ export default async function ProfilePage() {
         </div>
       </section>
 
-      <h2 className="mb-4 mt-10 text-xl font-bold">{t("prof.belt")}</h2>
+      <h2 className="mb-3 mt-8 text-lg font-bold sm:mb-4 sm:mt-10 sm:text-xl">{t("prof.belt")}</h2>
       <BeltProgress belt={profile.belt} stripes={profile.stripes} />
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -64,7 +64,7 @@ export default async function ProfilePage() {
         </form>
       </div>
 
-      <h2 className="mb-4 mt-10 text-xl font-bold">{t("prof.history")}</h2>
+      <h2 className="mb-3 mt-8 text-lg font-bold sm:mb-4 sm:mt-10 sm:text-xl">{t("prof.history")}</h2>
       <ul className="panel divide-y divide-white/10">
         {!history?.length && <li className="p-5 text-sm text-white/50">{t("prof.noHistory")}</li>}
         {history?.map((h) => {

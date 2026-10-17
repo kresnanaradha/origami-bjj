@@ -9,7 +9,7 @@ export default async function Membership() {
   return (
     <>
       <p className="eyebrow">{t("mem.eyebrow")}</p>
-      <h1 className="mb-10 mt-2 text-3xl font-bold">{t("mem.title")}</h1>
+      <h1 className="mb-8 mt-2 text-2xl font-bold sm:mb-10 sm:text-3xl">{t("mem.title")}</h1>
       <MembershipCard p={profile} />
       <div className="panel mt-12 flex items-center justify-between p-5">
         <p className="text-sm text-white/60">{t("mem.status")}</p>

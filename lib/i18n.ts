@@ -1,4 +1,4 @@
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
 export type Lang = "en" | "id";
 
@@ -151,11 +151,10 @@ const WEEKDAYS = {
   id: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
 };
 
+// Bahasa bawaan: Inggris. Pilihan ID/EN member disimpan di cookie.
 export async function getLang(): Promise<Lang> {
   const c = (await cookies()).get("lang")?.value;
-  if (c === "en" || c === "id") return c;
-  const al = (await headers()).get("accept-language") ?? "";
-  return al.toLowerCase().startsWith("id") ? "id" : "en";
+  return c === "id" ? "id" : "en";
 }
 
 export function makeI18n(lang: Lang) {

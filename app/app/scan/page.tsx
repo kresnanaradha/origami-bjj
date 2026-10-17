@@ -10,7 +10,7 @@ export default async function Scan({ searchParams }: PageProps<"/app/scan">) {
   return (
     <>
       <p className="eyebrow text-center">{t("scan.eyebrow")}</p>
-      <h1 className="mb-8 mt-2 text-center text-3xl font-bold">{t("scan.title")}</h1>
+      <h1 className="mb-6 mt-2 text-center text-2xl font-bold sm:mb-8 sm:text-3xl">{t("scan.title")}</h1>
       <ScanFlow
         initialToken={typeof token === "string" ? token : undefined}
         labels={{
